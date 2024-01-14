@@ -1,0 +1,52 @@
+﻿@page "/helloEvent"
+@rendermode RenderMode.InteractiveServer
+
+<button @onclick="IncrementCount">+</button>
+<span>@currentCount</span>
+<button @onclick="@(e => currentCount--)">-</button>
+<hr />
+
+<style>
+    #canvas {
+        margin: 20px;
+        width: 200px;
+        height: 200px;
+        background-color: #ccc;
+    }
+</style>
+<div id="canvas" @onclick="Click"></div>
+<div>
+    <p>ClientX: @clientX , ClientY: @clientY</p>
+    <p>OffsetX: @offsetX , OffsetY: @offsetY</p>
+    <p>PageX: @pageX , PageY: @pageY</p>
+    <p>ScreenX: @screenX , ScreenY: @screenY</p>
+</div>
+<hr />
+
+@code {
+
+    int currentCount;
+
+    async Task IncrementCount(MouseEventArgs e)
+    {
+        await Task.Delay(500); //бращение к сетевым ресурсам, бд
+        if (e.CtrlKey == true) currentCount = currentCount + 10;
+        currentCount++;
+    }
+
+
+    double clientX, clientY, offsetX, offsetY, pageX, pageY, screenX, screenY;
+
+    void Click(MouseEventArgs e)
+    {
+        clientX = e.ClientX;
+        clientY = e.ClientY;
+        offsetX = e.OffsetX;
+        offsetY = e.OffsetY;
+        pageX = e.PageX;
+        pageY = e.PageY;
+        screenX = e.ScreenX;
+        screenY = e.ScreenY;
+    }
+}
+

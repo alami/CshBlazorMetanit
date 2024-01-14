@@ -1,0 +1,27 @@
+﻿<h3>@Title</h3>
+
+<ul>
+    @foreach (var user in Users)
+    {
+        <li>@user</li>
+    }
+</ul>
+
+<ul>
+    <li>Name: @Data?.Item1</li>
+    <li>Age: @Data?.Item2</li>
+    <li>IsMarried: @Data?.Item3</li>
+</ul>
+
+
+@code {
+    [Parameter]
+    [EditorRequired]
+    public string Title { get; set; } = "World, world!";
+
+    [Parameter]
+    public List<string> Users { get; set; } = new();
+
+    [Parameter]
+    public Tuple<string, int, bool>? Data { get; set; }
+}

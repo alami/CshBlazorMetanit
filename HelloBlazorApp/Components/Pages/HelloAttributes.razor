@@ -1,0 +1,21 @@
+﻿@page "/helloAttributes"
+@rendermode InteractiveServer
+
+<input id="userAge" @attributes="InputAttributes" />
+
+<input id="userAge1" @attributes="MainInputAttributes" />
+
+@code {
+    public Dictionary<string, object> InputAttributes { get; set; } =
+        new()
+        {
+            {"type", "number" },
+            { "min", "1" },
+            { "max", "99" },
+            { "placeholder", "Input age" },
+            { "style", "width:150px;" }
+            };
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? MainInputAttributes { get; set; }
+}

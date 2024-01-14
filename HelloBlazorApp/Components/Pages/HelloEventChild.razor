@@ -1,0 +1,35 @@
+﻿@rendermode RenderMode.InteractiveServer
+
+<div>
+    <button @onclick="OnIncreaseCB">+</button>
+    <button @onclick="OnDecreaseCB">-</button>
+</div>
+
+<div>----------  EventCallback[T] типированный ----------</div>
+<div style="width:100px;height:100px;background-color:#ccc;" @onclick="OnClickCB"></div>
+
+
+<div>--------  добавлять в parent-список новые объекты  </div>
+
+    <input type="text" @bind-value="@item" />
+    <button @onclick="@(async() => await OnClickCB2.InvokeAsync(item))">Add</button>
+
+
+
+@code {
+    [Parameter]
+    public EventCallback OnIncreaseCB { get; set; }
+    [Parameter]
+    public EventCallback OnDecreaseCB { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClickCB { get; set; }
+
+    string item = "";
+    [Parameter]
+    public EventCallback<string> OnClickCB2 { get; set; }
+
+    //async Task OnClick()  {   await OnClickCB2.InvokeAsync(item);  }
+
+}
+

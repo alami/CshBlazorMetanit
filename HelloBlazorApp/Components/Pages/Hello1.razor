@@ -1,0 +1,43 @@
+﻿@page "/hello1"
+@rendermode InteractiveServer
+
+
+<h4>@Message @name</h4>
+<h5>@((MarkupString)html)</h5>
+<h5>@DisplayTime()</h5>
+
+<Hello2 Title="Space, Space"
+        Users="@users"
+        Data="@data" />
+
+<HelloChildContent>
+    <h3>footer</h3>
+    <i>italic</i>
+</HelloChildContent>
+
+<HelloAttributes MainInputAttributes="MainAttributes" />
+
+
+@code {
+    string Message { get; } = "Hello";
+    string name = "Sir";
+    string html = "<i>Hello Sir</i>";
+    string DisplayTime()
+    {
+        return $"Current time: {DateTime.Now.ToString("HH:mm:ss")}";
+    }
+
+    List<string> users = new List<string> { "Tom", "Bob", "Sam", "Mike" };
+
+    Tuple<string, int, bool> data = new("Tom", 38, false);
+
+    public Dictionary<string, object> MainAttributes { get; set; } =
+    new()
+    {
+        {"type", "number" },
+        { "min", "1" },
+        { "max", "10" },
+        { "placeholder", "Input child age" },
+        { "style", "width:300px;" }
+        };
+}

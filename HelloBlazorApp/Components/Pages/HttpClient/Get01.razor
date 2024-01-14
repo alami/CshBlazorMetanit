@@ -1,0 +1,17 @@
+﻿@page "/httpclient/Get01"
+@rendermode RenderMode.InteractiveServer
+@inject IHttpClientFactory ClientFactory
+
+<h2>@time</h2>
+<button @onclick="Submit">Click</button>
+
+@code {
+    string? time;
+    async Task Submit()
+    {
+        HttpClient httpClient = ClientFactory.CreateClient();
+        var response = await httpClient.GetAsync("https://localhost:7189/time");
+        time = await response.Content.ReadAsStringAsync();
+    }
+}
+

@@ -1,0 +1,29 @@
+﻿@page "/Demo04editFormValidator"
+@rendermode RenderMode.InteractiveServer
+
+<EditForm Model="@person" OnSubmit="Submit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <p>
+        Name:<br />
+        <InputText id="name" @bind-Value="person.Name" />
+    </p>
+    <p>
+        Age:<br />
+        <InputNumber id="age" @bind-Value="person.Age" ParsingErrorMessage="Введите число" />
+    </p>
+
+    <button type="submit">Submit</button>
+
+    <h3>@message</h3>
+</EditForm>
+@code {
+    string message = "";
+    Person person = new();
+
+
+    void Submit()
+    {
+        message = $"Name: {person.Name} Age: {person.Age}";
+    }
+}

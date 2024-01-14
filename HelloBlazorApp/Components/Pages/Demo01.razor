@@ -1,0 +1,63 @@
+﻿@page "/Demo01"
+@rendermode RenderMode.InteractiveServer
+
+<input value="@item" @onchange="@((ChangeEventArgs e) => item = e.Value.ToString())" />
+<p>Value: @item</p>
+@*---oninput - привязка стиля----*@
+<p><input @bind-value="divStyle" @bind-value:event="oninput" style="width:300px;" /></p>
+<div style="@divStyle"></div>
+@*---after - асинхронную обработку после установки значения----*@
+<input @bind="searchText" @bind:after="PerformSearch" />
+<ul>
+    @foreach (var item in found)
+    {
+        <li>@item</li>
+    }
+</ul>
+
+@*--------- пара двусторонней привязки поля ввода---------*@
+<input type="number" @bind:get="age" @bind:set="SetAge" />
+<h2>Age: @age</h2>
+
+@*------- Привязка параметров вложенных компонентов  ---- *@
+<Demo01child Title="@item"
+             @bind-Search="text" />
+<input @bind="@item" />
+@* ---------*@
+<p><button @onclick="Clear">Clear</button></p>
+<ul>
+    @foreach (var item in Found)
+    {
+        <li>@item</li>
+    }
+</ul>
+
+@code {
+    string item = "Space";
+    string divStyle = "background-color:blue;width:100px;height:100px;";
+
+    List<string> items = ["qwe", "asd", "zxc"];    // условная база данных
+    List<string> found = [];    // найденные данные
+    string searchText = "";     // ключ поиска
+    async Task PerformSearch()
+    {
+        await Task.Delay(400);  // для имитации долгой работы
+        found = items.Where(item => item.Contains(searchText)).ToList();
+    }
+
+    int age = 18;
+    void SetAge(int value) { if (value > 0 && value < 110) age = value; }
+
+
+    string text = "C";    // искомое слово
+
+    List<string> database = ["C#", "C++", "JavaScript", "Java", "Python"];
+
+    List<string> Found  // найденные элементы
+    {
+        get { return database.Where(name => name.Contains(text)).ToList(); }
+    }
+    // очищаем поиск
+    void Clear() => text = "";
+
+}

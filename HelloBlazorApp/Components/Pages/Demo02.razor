@@ -1,0 +1,54 @@
+﻿@page "/Demo02"
+@rendermode RenderMode.InteractiveServer
+
+<h3>Demo02</h3>
+<h2>Person</h2>
+<div>
+    <p>
+        Name:<br />
+        <input @bind-value="person.Name" />
+    </p>
+    <p>
+        Age:<br />
+        <input type="number" @bind-value="person.Age" />
+    </p>
+    <p>
+        Date:<br />
+        <input type="date" @bind="person.Day" />
+    </p>
+    <p>
+        Working:<br />
+        <input type="checkbox" @bind="person.Working" />
+    </p>
+    <p>
+        Subject:<br />
+        <input type="radio" name="subject" @onchange='@(()=>person.Subject = "Math")' />Math <br />
+        <input type="radio" name="subject" @onchange='@(()=>person.Subject = "Programming")' />Programming
+    </p>
+    <p>
+        Courses:<br />
+        <select multiple @bind="person.Courses">
+            <option value="C#">C#</option>
+            <option value="JavaScript">JavaScript</option>
+            <option value="C++">C++</option>
+        </select>
+    </p>
+    <button @onclick="Submit">Send</button>
+</div>
+<div>
+    <p>Name @person.Name</p>
+    <p>Age: @person.Age</p>
+    <p>Day: @person.Day.ToShortDateString()</p>
+    <p>Working: @person.Working</p>
+    <p>Subject: @person.Subject</p>
+    <p>Courses: @string.Join(", ", person.Courses)</p>
+</div>
+
+@code {
+    Person person = new();
+
+    void Submit()
+    {
+        Console.WriteLine($"{person.Name} - {person.Age}");
+    }
+}

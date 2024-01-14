@@ -1,0 +1,40 @@
+﻿@page "/helloEvent4Ch"
+@rendermode RenderMode.InteractiveServer
+
+<h2>Count: @count</h2>
+<hr />
+<div>@coords</div>
+
+<HelloEventChild OnIncreaseCB="Increase" OnDecreaseCB="Decrease"
+                 OnClickCB="@GetCoords" 
+                 OnClickCB2="@AddNewUser"/>
+<div>----Передача произвольного объекта в обработчик события-----</div>
+<ul>
+    @foreach (var user in users)
+    {
+        <li>@user</li>
+    }
+</ul>
+
+@code {
+    int count;
+    void Increase() => count++;
+    void Decrease() => count--;
+
+    string coords = "Coords";
+    void GetCoords(MouseEventArgs e)
+    {
+        coords = $"Coords X = {e.ClientX}  Y= {e.ClientY}";
+    }
+
+    List<string> users = [];
+    void AddNewUser(string user)
+    {
+        users.Add(user);
+    }
+
+}
+
+
+
+
